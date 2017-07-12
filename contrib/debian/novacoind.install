@@ -1,0 +1,2 @@
+debian/bin/ChinaCurrencyCoind usr/bin
+src/ChinaCurrencyCoind usr/lib/ChinaCurrencyCoin

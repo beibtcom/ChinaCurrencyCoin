@@ -1,0 +1,9 @@
+Building ChinaCurrencyCoin
+
+See doc/readme-qt.rst for instructions on building ChinaCurrencyCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of ChinaCurrencyCoin.
+
+See doc/build-*.txt for instructions on building ChinaCurrencyCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of ChinaCurrencyCoin.

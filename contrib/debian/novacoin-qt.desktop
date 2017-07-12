@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ChinaCurrencyCoin
+Comment=ChinaCurrencyCoin P2P Cryptocurrency
+Comment[ru]=ChinaCurrencyCoin, P2P криптовалюта
+Comment[fr]=ChinaCurrencyCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=ChinaCurrencyCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/ChinaCurrencyCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/ChinaCurrencyCoin80.xpm
+MimeType=x-scheme-handler/ChinaCurrencyCoin;
+Categories=Office;

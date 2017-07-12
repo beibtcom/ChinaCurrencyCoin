@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: ChinaCurrencyCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# ChinaCurrencyCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable ChinaCurrencyCoin service.
+# ChinaCurrencyCoin_config (path): Set to /usr/local/etc/ChinaCurrencyCoin.conf by default.
+# ChinaCurrencyCoin_user:  The user account ChinaCurrencyCoin daemon runs as. It uses 'root' user by default.
+# ChinaCurrencyCoin_group: The group account ChinaCurrencyCoin daemon runs as. It uses 'wheel' group by default.
+# ChinaCurrencyCoin_datadir (str): Default to "/var/db/ChinaCurrencyCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=ChinaCurrencyCoin
+rcvar=ChinaCurrencyCoin_enable
+
+: ${ChinaCurrencyCoin_enable:=NO}
+: ${ChinaCurrencyCoin_config=/usr/local/etc/ChinaCurrencyCoin.conf}
+: ${ChinaCurrencyCoin_datadir=/var/db/ChinaCurrencyCoin}
+: ${ChinaCurrencyCoin_user="root"}
+: ${ChinaCurrencyCoin_group="wheel"}
+
+required_files=${ChinaCurrencyCoin_config}
+command=/usr/local/bin/ChinaCurrencyCoind
+ChinaCurrencyCoin_chdir=${ChinaCurrencyCoin_datadir}
+pidfile="${ChinaCurrencyCoin_datadir}/ChinaCurrencyCoind.pid"
+stop_cmd=ChinaCurrencyCoin_stop
+command_args="-conf=${ChinaCurrencyCoin_config} -datadir=${ChinaCurrencyCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+ChinaCurrencyCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${ChinaCurrencyCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${ChinaCurrencyCoin_user}:${ChinaCurrencyCoin_group} ${ChinaCurrencyCoin_datadir}
+}
+
+ChinaCurrencyCoin_prestart()
+{
+	if [ ! -d "${ChinaCurrencyCoin_datadir}/." ]; then
+		ChinaCurrencyCoin_create_datadir || return 1
+	fi
+}
+
+ChinaCurrencyCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+ChinaCurrencyCoin_stop()
+{
+    ChinaCurrencyCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${ChinaCurrencyCoin_config} -datadir=${ChinaCurrencyCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

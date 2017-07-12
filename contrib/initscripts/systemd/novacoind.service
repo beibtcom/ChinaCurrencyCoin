@@ -1,0 +1,11 @@
+[Unit]
+Description=ChinaCurrencyCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=ChinaCurrencyCoin
+ExecStart=/opt/ChinaCurrencyCoin/ChinaCurrencyCoind
+
+[Install]
+WantedBy=multi-user.target

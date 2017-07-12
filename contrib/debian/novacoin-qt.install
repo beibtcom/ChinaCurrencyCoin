@@ -1,0 +1,5 @@
+ChinaCurrencyCoin-qt usr/bin
+share/pixmaps/ChinaCurrencyCoin32.xpm usr/share/pixmaps
+share/pixmaps/ChinaCurrencyCoin80.xpm usr/share/pixmaps
+debian/ChinaCurrencyCoin-qt.desktop usr/share/applications
+debian/ChinaCurrencyCoin-qt.protocol usr/share/kde4/services/
